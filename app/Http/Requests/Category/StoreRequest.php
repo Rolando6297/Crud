@@ -8,7 +8,8 @@ use Illuminate\Support\Str;
 class StoreRequest extends FormRequest
 {
 
-    protected function prepareForValidation(){
+    protected function prepareForValidation()
+    {
         $this->merge([
             'slug' => Str::slug($this->title)
         ]);
@@ -31,7 +32,7 @@ class StoreRequest extends FormRequest
         return [
             "title" => "required | min:5 | max:500",
             "slug" => "required | min:5 | max:500 | unique:posts",
-        
+
         ];
     }
 }

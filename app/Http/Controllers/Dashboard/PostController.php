@@ -21,7 +21,6 @@ class PostController extends Controller
         //return redirect("post/create");
         //return redirect()->route("post.create");
         //return to_route("post.create");
-   
         $posts = Post::paginate(3);
         return view('dashboard.post.index', compact("posts"));
     }
@@ -31,11 +30,11 @@ class PostController extends Controller
      */
     public function create()
     {
-        $post =new Post();
-       // $categories = Category::get();
-        $categories = Category::pluck('id','title');
-  
-       echo view("dashboard.post.create", compact('categories', 'post'));
+        $post = new Post();
+        // $categories = Category::get();
+        $categories = Category::pluck('id', 'title');
+
+        echo view("dashboard.post.create", compact('categories', 'post'));
     }
 
     /**
@@ -46,22 +45,21 @@ class PostController extends Controller
         //dd($request);
         //"));
         //$validate =$request->validate(
-          //  [
-            //    "title" => "required | min:5 | max:500",
-              //  "slug" => "required | min:5 | max:500",
-              //  "content" => "required | min:7",
-              //  "category_id" => "required | integer ",
-             //   "posted" => "required",
-           // ]
+        //  [
+        //    "title" => "required | min:5 | max:500",
+        //  "slug" => "required | min:5 | max:500",
+        //  "content" => "required | min:7",
+        //  "category_id" => "required | integer ",
+        //   "posted" => "required",
+        // ]
         //);
         //echo request("title");
         //echo $request->input('slug');
-       // $data = $request->validated();
+        // $data = $request->validated();
         //$data['slug']=Str::slug($data['title']);
         //dd($data);
         Post::create($request->validated());
         return to_route("post.index");
-        
     }
 
     /**
@@ -77,9 +75,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $categories = Category::pluck('id','title');
-        
-       echo view("dashboard.post.edit", compact('categories', 'post'));
+        $categories = Category::pluck('id', 'title');
+        echo view("dashboard.post.edit", compact('categories', 'post'));
     }
 
     /**
@@ -87,17 +84,16 @@ class PostController extends Controller
      */
     public function update(PutRequest $request, Post $post)
     {
-        $data =$request->validated();
-        if(isset($data["image"])){
-  
-          $data["image"] =  $filename = time().".".$data["image"]->extension();
-            
+        $data = $request->validated();
+        if (isset($data["image"])) {
+
+            $data["image"] =  $filename = time() . "." . $data["image"]->extension();
             $request->image->move(public_path("image"), $filename);
         }
-        
+
         $post->update($data);
         $request->session()->flash('status', "Registro actualizado.");
-        
+
         return to_route("post.index");
     }
 
