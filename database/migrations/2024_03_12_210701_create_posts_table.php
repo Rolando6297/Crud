@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("title", 500)->nullable();
             $table->string("slug", 500)->nullable();
             $table->text("content")->nullable();
-            $table->string("image");
+            $table->string("image")->nullable();
             $table->enum("posted", ['yes', 'not'])->default('not');
             $table->timestamps();
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
